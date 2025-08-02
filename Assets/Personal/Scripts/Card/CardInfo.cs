@@ -9,5 +9,6 @@ public class CardInfo : ScriptableObject
     [ShowAssetPreview] public Sprite artwork;
     public int cost;
     public int health;
+    public int damage;
     public int attackPower;
 }

@@ -2,10 +2,12 @@ using DG.Tweening;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
+
 
 public class Card : MonoBehaviour
 {
-    [SerializeField, Expandable] CardInfo cardInfo;
+    [SerializeField, Expandable] public CardInfo cardInfo;
 
     [HorizontalLine]
 
@@ -20,7 +22,11 @@ public class Card : MonoBehaviour
 
     [SerializeField, ReadOnly] int health;
 
-    public Transform enemyCard;
+
+    public RectTransform rect;
+
+    public UnityEvent<int> onDeath;
+    public int position;
 
     void Start()
     {
@@ -59,9 +65,16 @@ public class Card : MonoBehaviour
         }
     }
 
-    [Button]
-    void Attack()
-    {
-        transform.DOMove(enemyCard.position, 0.5f).SetEase(Ease.InBack);
+    public void TakeDamage(int amount) { 
+        health -= amount;
+        if (health <= 0) {
+            health = 0;
+            onDeath?.Invoke(position);
+        }
+        RefreshUI();
+    }
+
+    void RefreshUI() {
+        healthText.text = cardInfo.health.ToString();
     }
 }
