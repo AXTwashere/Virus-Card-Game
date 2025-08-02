@@ -26,7 +26,7 @@ public class Card : MonoBehaviour
     public RectTransform rect;
 
     public UnityEvent<int> onDeath;
-    public int position;
+    public int index;
 
     void Start()
     {
@@ -69,7 +69,7 @@ public class Card : MonoBehaviour
         health -= amount;
         if (health <= 0) {
             health = 0;
-            onDeath?.Invoke(position);
+            onDeath?.Invoke(index);
         }
         RefreshUI();
     }
