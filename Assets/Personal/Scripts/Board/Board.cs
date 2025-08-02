@@ -27,15 +27,18 @@ public class Board : MonoBehaviour
     private void Start()
     {
         researchTransform = researchLayout.GetComponent<RectTransform>();
-        AddResearch(test);
+        AddCard(1,test);
     }
 
     void AddCard(int pos, Card card) {
         //
         cardList[pos] = card;
-        card.position = pos;
+        card.index = pos;
         card.onDeath.AddListener(RemoveCard);
-        
+        card.rect.DOMove(cardSlots[pos].position, 0.5f).SetEase(Ease.InBack).OnComplete(() => {
+            card.rect.SetParent(cardSlots[pos]);
+        });
+
     }
 
     void AddResearch(Card card) { 
