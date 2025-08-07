@@ -52,7 +52,7 @@ public class Card : MonoBehaviour
             print("CardInfo is not assigned!");
             return;
         }
-
+        print(cardInfo.cardName);
         nameText.text = cardInfo.cardName;
         descriptionText.text = cardInfo.description;
         costText.text = cardInfo.cost.ToString();
