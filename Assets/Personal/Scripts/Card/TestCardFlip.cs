@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using DG.Tweening;
 using NaughtyAttributes;
@@ -11,11 +12,27 @@ public class TestCardFlip : MonoBehaviour
     [SerializeField] Vector3 localAxis = Vector3.up;
     [SerializeField] Camera cam;
 
-   bool flipping;
+    bool flipping;
     public bool IsFlipping => flipping;
 
+    void Start()
+    {
+        StartCoroutine(FlipRoutine());
+    }
+
+    IEnumerator FlipRoutine()
+    {
+        while (true)
+        {
+            bool isFlipped = false;
+            Flip(() => isFlipped = true);
+            yield return new WaitUntil(() => isFlipped);
+            yield return new WaitForSeconds(0.5f);
+        }
+    }
+
     [Button]
-    public void Flip()
+    public void Flip(Action OnFlipComplete)
     {
         if (flipping) return;
         flipping = true;
@@ -47,6 +64,10 @@ public class TestCardFlip : MonoBehaviour
 
                 dotPrev = dotNow;
             })
-            .OnComplete(() => flipping = false);
+            .OnComplete(() =>
+            {
+                flipping = false;
+                OnFlipComplete?.Invoke();
+            });
     }
 }
