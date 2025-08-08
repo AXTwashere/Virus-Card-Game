@@ -3,6 +3,7 @@ using DG.Tweening;
 using NUnit.Framework.Constraints;
 using UnityEngine;
 using UnityEngine.UI;
+using NaughtyAttributes;
 
 
 
@@ -10,34 +11,37 @@ using UnityEngine.UI;
 public class Board : MonoBehaviour
 {
     public Board enemyBoard;
+    public Deck deck;
+    public VerticalLayoutGroup researchLayout;
+
     public Card[] cardList = new Card[5];
     public RectTransform[] cardSlots = new RectTransform[5];
 
     public int researchPoints = 0;
     public int researchCards = 1;
-
-    public VerticalLayoutGroup researchLayout;
+    
     RectTransform researchTransform;
-
-    //tests
-    public Card test;
-
 
     private void Start()
     {
         researchTransform = researchLayout.GetComponent<RectTransform>();
-        AddResearch(test);
+        
     }
+    //tests
+    public Card test;
+    [Button]
+    void Test() { AddCard(1, test); }
 
-    public void AddCard(int pos, Card card) {
-        //
+    public bool AddCard(int pos, Card card) {
+        if (cardList[pos] != null) return false;
         cardList[pos] = card;
         card.index = pos;
         card.onDeath.AddListener(RemoveCard);
 
-        card.rect.DOMove(cardSlots[pos].rect.position, 0.5f).SetEase(Ease.InBack).OnComplete(() => {
+        card.rect.DOMove(cardSlots[pos].transform.position, 0.5f).SetEase(Ease.InBack).OnComplete(() => {
             card.rect.SetParent(cardSlots[pos]);
         });
+        return true;
 
     }
 
@@ -58,12 +62,9 @@ public class Board : MonoBehaviour
     }
 
     private void RemoveCard(int pos) {
-        
+        cardList[pos].rect.DOMove(deck.transform.position, 0.5f).SetEase(Ease.InBack).OnComplete(() => {
+            //call Deck Animation
+        });
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

@@ -7,6 +7,8 @@ using UnityEngine.Events;
 
 public class Card : MonoBehaviour
 {
+    public bool setupAtStart;
+
     [SerializeField, Expandable] public CardInfo cardInfo;
 
     [HorizontalLine]
@@ -28,8 +30,14 @@ public class Card : MonoBehaviour
     public UnityEvent<int> onDeath;
     public int index;
 
-    void Start()
+    void Start() {
+        if (setupAtStart) SetUp(cardInfo, false);
+    }
+
+    public void SetUp(CardInfo newInfo, bool flipped)
     {
+        if (flipped) transform.rotation = Quaternion.Euler(transform.rotation.x,180,transform.rotation.z);
+        cardInfo = newInfo;
         Init();
         InitUI();
     }
