@@ -23,14 +23,10 @@ public class TestCardFlip : MonoBehaviour
         dragger.OnDrop.AddListener(OnDropCallback);
     }
 
-    void OnDropCallback(RectTransform dropTarget, bool isDropped)
+    void OnDropCallback(RectTransform dropTarget)
     {
-        dragger.IsValidDropTarget = (target) => target != null && target.GetComponent<CardSlot>();
-        if (isDropped)
-        {
-            //dragger.transform.SetParent(dropTarget);
-            //dragger.transform.localPosition = Vector3.zero;
-        }
+        dragger.transform.SetParent(dropTarget);
+        dragger.transform.localPosition = Vector3.zero;
     }
 
     IEnumerator FlipRoutine()

@@ -9,16 +9,10 @@ using UnityEngine.UI;
 public class UIDragger : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     public UnityEvent OnPickup;
-    public UnityEvent<RectTransform, bool> OnDrop;
-    public bool snapBackToOriginalPosition = true;
-
-    public Func<RectTransform, bool> IsValidDropTarget;
-
+    public UnityEvent<RectTransform> OnDrop;
     Canvas canvas;
     RectTransform rectTransform;
     CanvasGroup canvasGroup;
-    Transform originalParent;
-    Vector2 originalPosition;
 
     void Start()
     {
@@ -30,12 +24,7 @@ public class UIDragger : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        // Handle the beginning of the drag
-        originalParent = transform.parent;
-        originalPosition = rectTransform.anchoredPosition;
-
         transform.SetParent(canvas.transform);
-
         canvasGroup.blocksRaycasts = false;
         OnPickup?.Invoke();
     }
@@ -50,28 +39,8 @@ public class UIDragger : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     {
         // Handle the end of the drag
         RectTransform dropTarget = GetUIUnderMouse(eventData);
-        bool isValidDrop = IsValidDropTarget?.Invoke(dropTarget) ?? false;
-
-        if (isValidDrop == false)
-        {
-            transform.SetParent(originalParent);
-            if (snapBackToOriginalPosition)
-            {
-                if (transform.parent.TryGetComponent(out LayoutGroup group))
-                {
-                    LayoutRebuilder.ForceRebuildLayoutImmediate(group.GetComponent<RectTransform>());
-                }
-                else
-                {
-                    rectTransform.anchoredPosition = originalPosition;
-                }
-            }
-        }
-
-        originalParent = transform.parent;
-        originalPosition = rectTransform.anchoredPosition;
         canvasGroup.blocksRaycasts = true;
-        OnDrop?.Invoke(dropTarget, isValidDrop);
+        OnDrop?.Invoke(dropTarget);
     }
 
     RectTransform GetUIUnderMouse(PointerEventData eventData)
