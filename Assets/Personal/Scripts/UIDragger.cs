@@ -71,7 +71,7 @@ public class UIDragger : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         originalParent = transform.parent;
         originalPosition = rectTransform.anchoredPosition;
         canvasGroup.blocksRaycasts = true;
-        OnDrop?.Invoke(dropTarget, dropTarget != null);
+        OnDrop?.Invoke(dropTarget, isValidDrop);
     }
 
     RectTransform GetUIUnderMouse(PointerEventData eventData)
