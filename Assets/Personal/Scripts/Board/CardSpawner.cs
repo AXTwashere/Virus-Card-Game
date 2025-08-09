@@ -17,10 +17,10 @@ public class CardSpawner : MonoBehaviour
         CreateCardPlayer(test);
     }
 
-    public Card CreateCardPlayer(Vector2 position) {
+    public Card CreateCardPlayer(Vector3 position) {
         int index = Random.Range(0, playerCardInfos.Length);
         Card card = Instantiate(basicCardPrefab, board);
-        card.rect.position = position;
+        card.rect.localPosition = card.transform.parent.InverseTransformPoint(position);
         card.SetUp(playerCardInfos[index], true);
         return card;
     }

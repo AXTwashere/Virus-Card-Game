@@ -997,7 +997,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1595811194}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1023,6 +1023,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardSpawner: {fileID: 902210582}
   hand: {fileID: 1671471603}
+  rect: {fileID: 1595811195}
   cam: {fileID: 519420031}
 --- !u!114 &1595811197
 MonoBehaviour:
@@ -1635,11 +1636,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3070151475668895948, guid: 29d1ef8a2ed8cfd428a2f2034caf4ebd, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -353
+      value: -229
       objectReference: {fileID: 0}
     - target: {fileID: 3070151475668895948, guid: 29d1ef8a2ed8cfd428a2f2034caf4ebd, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -77
+      value: -49.09
       objectReference: {fileID: 0}
     - target: {fileID: 3070151475668895948, guid: 29d1ef8a2ed8cfd428a2f2034caf4ebd, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

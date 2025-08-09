@@ -2,9 +2,10 @@ using DG.Tweening;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Events;
 
-
+[RequireComponent(typeof(Button))]
 public class Card : MonoBehaviour
 {
     public bool setupAtStart;
@@ -27,13 +28,22 @@ public class Card : MonoBehaviour
 
     public RectTransform rect;
     public GameObject cardFront;
+    Button button;
 
     public UnityEvent<int> onDeath;
     public int index;
 
+    BattleManager battleManager;
+    
+
     void Start() {
+        button = GetComponent<Button>();
+        button.onClick.AddListener(onButtonClick);
+        battleManager = BattleManager.battleManager;
         if (setupAtStart) SetUp(cardInfo, false);
     }
+
+    void onButtonClick() { }
 
     public void SetUp(CardInfo newInfo, bool flipped)
     {
@@ -92,4 +102,7 @@ public class Card : MonoBehaviour
     void RefreshUI() {
         healthText.text = cardInfo.health.ToString();
     }
+
+    
+
 }

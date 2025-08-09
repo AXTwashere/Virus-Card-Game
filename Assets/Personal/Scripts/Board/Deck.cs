@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using DG.Tweening;
 using System;
 using System.Collections;
@@ -8,14 +9,14 @@ public class Deck : MonoBehaviour
 {
     public CardSpawner cardSpawner;
     public Hand hand;
-
+    public RectTransform rect;
     public void GameStart()
     {
         
     }
     [Button]
     public void DrawCard() {
-        Card card = cardSpawner.CreateCardPlayer(transform.position);
+        Card card = cardSpawner.CreateCardPlayer(rect.position);
         Flip(card, () => {hand.AddCard(card);});
     }
 
