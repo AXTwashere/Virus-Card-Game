@@ -1,20 +1,30 @@
 using UnityEngine;
+using UnityEngine.UI;
+using NaughtyAttributes;
+using DG.Tweening;
 
 public class CardSpawner : MonoBehaviour
 {
     public CardInfo[] playerCardInfos;
     public CardInfo[] enemyCardInfos;
     public Card basicCardPrefab;
+    public RectTransform board;
 
-    public Card CreateCardPlayer() {
+    public Vector2 test;
+
+    [Button]
+    public void Test() {
+        CreateCardPlayer(test);
+    }
+
+    public Card CreateCardPlayer(Vector2 position) {
         int index = Random.Range(0, playerCardInfos.Length);
-        Card card = Instantiate(basicCardPrefab);
+        Card card = Instantiate(basicCardPrefab, board);
+        card.rect.position = position;
         card.SetUp(playerCardInfos[index], true);
-
-        //flip animation
-        // on complete return card
         return card;
     }
+
     public void RemoveCard(Card card) {
         // flip animation
         //on complete death animation
@@ -32,5 +42,7 @@ public class CardSpawner : MonoBehaviour
         //on complete return card
         return card;
     }
+
+    
 
 }

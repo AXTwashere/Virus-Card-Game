@@ -27,6 +27,7 @@ public class Board : MonoBehaviour
         researchTransform = researchLayout.GetComponent<RectTransform>();
         
     }
+
     //tests
     public Card test;
     [Button]

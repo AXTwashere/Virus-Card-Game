@@ -26,6 +26,7 @@ public class Card : MonoBehaviour
 
 
     public RectTransform rect;
+    public GameObject cardFront;
 
     public UnityEvent<int> onDeath;
     public int index;
@@ -36,11 +37,18 @@ public class Card : MonoBehaviour
 
     public void SetUp(CardInfo newInfo, bool flipped)
     {
-        if (flipped) transform.rotation = Quaternion.Euler(transform.rotation.x,180,transform.rotation.z);
+        if (flipped)
+        {
+            FlipToBack();
+            transform.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
+        }
         cardInfo = newInfo;
         Init();
         InitUI();
     }
+
+    public void FlipToFront() { cardFront.SetActive(true); }
+    public void FlipToBack() { cardFront.SetActive(false); }
 
     void Init()
     {
@@ -60,7 +68,6 @@ public class Card : MonoBehaviour
             print("CardInfo is not assigned!");
             return;
         }
-        print(cardInfo.cardName);
         nameText.text = cardInfo.cardName;
         descriptionText.text = cardInfo.description;
         costText.text = cardInfo.cost.ToString();
