@@ -15,9 +15,22 @@ public class TestCardFlip : MonoBehaviour
     bool flipping;
     public bool IsFlipping => flipping;
 
+    public UIDragger dragger;
+
     void Start()
     {
-        StartCoroutine(FlipRoutine());
+        //StartCoroutine(FlipRoutine());
+        dragger.OnDrop.AddListener(OnDropCallback);
+    }
+
+    void OnDropCallback(RectTransform dropTarget, bool isDropped)
+    {
+        dragger.IsValidDropTarget = (target) => target != null && target.GetComponent<CardSlot>();
+        if (isDropped)
+        {
+            dragger.transform.SetParent(dropTarget);
+            dragger.transform.localPosition = Vector3.zero;
+        }
     }
 
     IEnumerator FlipRoutine()
@@ -31,7 +44,6 @@ public class TestCardFlip : MonoBehaviour
         }
     }
 
-    [Button]
     public void Flip(Action OnFlipComplete)
     {
         if (flipping) return;
