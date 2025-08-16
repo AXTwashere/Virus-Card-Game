@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
+using DG.Tweening;
 
 public class BattleManager : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
@@ -61,15 +62,15 @@ public class BattleManager : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
             zoomParent = curSelectCard.GetComponentInParent<AddCard>();
 
-            Vector2 scale = curSelectCard.transform.localScale;
+            Vector3 scale = curSelectCard.transform.localScale;
             zoomOriginalScale = scale;
 
             curSelectCard.transform.SetParent(canvas.transform);
             curSelectCard.moveable = false;
             curSelectCard.removeable = false;
             //grow animation
-            curSelectCard.transform.localScale = new Vector3(scale.x * 2, scale.y * 2, 0);
-            curSelectCard.rect.anchoredPosition = new Vector2(canvasRect.rect.width, -canvasRect.rect.height) / 2;
+            curSelectCard.transform.localScale = new Vector3(scale.x * 2, scale.y * 2, 1);
+            curSelectCard.rect.anchoredPosition = new Vector2(0, 0);
             
         }
     }
@@ -146,20 +147,29 @@ public class BattleManager : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
                 Reset(); return;}
 
             Research researchTarget = dropTarget.GetComponent<Research>();
-            print(researchTarget);
             if (researchTarget != null && curCard.cardInfo.cardType == "research"){
                 target.AddNewCard(curCard);
                 Reset(); return;}
 
         }
-
         //check opponent
-        
+        Enemy enemy = dropTarget.GetComponent<Enemy>();
+        if (enemy != null && originalParent.GetComponent<CardSlot>() != null)
+        {
+            curCard.rect.DOMove(enemy.transform.position, .3f).SetEase(Ease.InBack).OnComplete(() =>
+            {
+                enemy.TakeDamage(curCard.cardInfo.damage);
+                GoToParent();
+                Reset();
+                return;
+            });
+        }
+
         //if none go back to original parent
-        originalParent.AddNewCard(curCard);
+        GoToParent();
         Reset();
     }
-
+    void GoToParent() { if (originalParent!=null) originalParent.AddNewCard(curCard);}
     void Reset() {
         curCard.canvasGroup.blocksRaycasts = true;
         curCard = null;

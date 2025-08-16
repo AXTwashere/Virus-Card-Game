@@ -1,18 +1,21 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Events;
 
 public class Hoverable : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
 
-    public bool isHovering;
+    public bool isHoverable;
+    public UnityEvent<Hoverable> evtOnPointerEnter;
+    public UnityEvent<Hoverable> evtOnPointerExit;
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        isHovering = true;
+        if (isHoverable) evtOnPointerEnter?.Invoke(this);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        isHovering = false;
+        if (isHoverable) evtOnPointerExit?.Invoke(this);
     }
 }

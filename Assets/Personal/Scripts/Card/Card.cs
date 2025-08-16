@@ -35,6 +35,9 @@ public class Card : MonoBehaviour
     public int index;
 
     BattleManager battleManager;
+    CardStack stack;
+    Hoverable hoverable;
+
 
     public bool moveable;
     public bool removeable;
@@ -44,7 +47,6 @@ public class Card : MonoBehaviour
     void Start() {
         button = GetComponent<Button>();
         button.onClick.AddListener(onButtonClick);
-        battleManager = BattleManager.battleManager;
         if (setupAtStart) SetUp(cardInfo, false);
     }
 
@@ -67,11 +69,17 @@ public class Card : MonoBehaviour
 
     void Init()
     {
+        hoverable = GetComponent<Hoverable>();
+        battleManager = BattleManager.battleManager;
+
         moveable = true;
 
         removeable = true;
 
         health = cardInfo.health;
+
+        hoverable.evtOnPointerEnter.AddListener(_ => { stack?.SetHovered(rect, true); });
+        hoverable.evtOnPointerExit.AddListener(_ => { stack?.SetHovered(rect, false); });
     }
 
     void InitUI()
@@ -101,6 +109,11 @@ public class Card : MonoBehaviour
 
     void RefreshUI() {
         healthText.text = cardInfo.health.ToString();
+    }
+
+    public void SetStack(CardStack owner)
+    {
+        stack = owner;
     }
 
 }
