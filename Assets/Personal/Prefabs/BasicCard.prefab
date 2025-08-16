@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1957884199423919489}
   - component: {fileID: 5231928739783565479}
   - component: {fileID: 6624270748621320375}
+  - component: {fileID: 2376186864031334530}
   m_Layer: 5
   m_Name: BasicCard
   m_TagString: Untagged
@@ -65,7 +66,7 @@ MonoBehaviour:
   nameText: {fileID: 6979808232237763151}
   descriptionText: {fileID: 2881306807391292410}
   costText: {fileID: 8552207773243889136}
-  attackPowerText: {fileID: 468553463746487091}
+  damageText: {fileID: 468553463746487091}
   healthText: {fileID: 1114927725332222447}
   artworkRenderer: {fileID: 0}
   health: 0
@@ -75,6 +76,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   index: 0
+  moveable: 0
+  removeable: 0
+  attacked: 0
 --- !u!114 &6624270748621320375
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -119,6 +123,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!225 &2376186864031334530
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 496962618066449112}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &615007665598853713
 GameObject:
   m_ObjectHideFlags: 0

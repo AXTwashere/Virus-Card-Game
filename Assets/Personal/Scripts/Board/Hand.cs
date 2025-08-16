@@ -8,14 +8,26 @@ public class Hand : MonoBehaviour
 {
 
     public Board board;    
-    Card curCard = null;
     public RectTransform rect;
 
+    AddCard addCard;
+
+    void Start() {
+        addCard = GetComponent<AddCard>();
+        addCard.cardAdded.AddListener(cardAdded);
+        addCard.cardRemove.AddListener(cardRemove);
+    }
+
+    void cardAdded(Card card) { }
+    void cardRemove(Card card) { }
+
     public void AddCard(Card card){
+        
         card.rect.DOMove(rect.position, 0.5f).SetEase(Ease.InBack).OnComplete(() => {
             card.rect.SetParent(rect);
             //update spacing
         });
+        
     }
 
     //tests

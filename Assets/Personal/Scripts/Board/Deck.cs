@@ -21,7 +21,7 @@ public class Deck : MonoBehaviour
     }
 
     public void RemoveCard(Card card) {
-        cardSpawner.RemoveCard(card);
+        Flip(card, () => { Destroy(card); });
     }
 
 

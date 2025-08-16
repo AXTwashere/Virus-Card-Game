@@ -13,6 +13,7 @@ public class UIDragger : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     Canvas canvas;
     RectTransform rectTransform;
     CanvasGroup canvasGroup;
+    public Hand hand;
 
     void Start()
     {

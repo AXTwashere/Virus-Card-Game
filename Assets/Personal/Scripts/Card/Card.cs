@@ -17,7 +17,7 @@ public class Card : MonoBehaviour
     [SerializeField] TMP_Text nameText;
     [SerializeField] TMP_Text descriptionText;
     [SerializeField] TMP_Text costText;
-    [SerializeField] TMP_Text attackPowerText;
+    [SerializeField] TMP_Text damageText;
     [SerializeField] TMP_Text healthText;
     [SerializeField] SpriteRenderer artworkRenderer;
 
@@ -27,13 +27,18 @@ public class Card : MonoBehaviour
 
 
     public RectTransform rect;
+    public CanvasGroup canvasGroup;
     public GameObject cardFront;
     Button button;
 
-    public UnityEvent<int> onDeath;
+    public UnityEvent onDeath;
     public int index;
 
     BattleManager battleManager;
+
+    public bool moveable;
+    public bool removeable;
+    public bool attacked = false;
     
 
     void Start() {
@@ -62,26 +67,21 @@ public class Card : MonoBehaviour
 
     void Init()
     {
-        if (cardInfo == null)
-        {
-            print("CardInfo is not assigned!");
-            return;
-        }
+        moveable = true;
+
+        removeable = true;
 
         health = cardInfo.health;
     }
 
     void InitUI()
     {
-        if (cardInfo == null)
-        {
-            print("CardInfo is not assigned!");
-            return;
-        }
+        canvasGroup = GetComponent<CanvasGroup>();
+
         nameText.text = cardInfo.cardName;
         descriptionText.text = cardInfo.description;
         costText.text = cardInfo.cost.ToString();
-        attackPowerText.text = cardInfo.attackPower.ToString();
+        damageText.text = cardInfo.damage.ToString();
         healthText.text = cardInfo.health.ToString();
 
         if (cardInfo.artwork != null)
@@ -94,7 +94,7 @@ public class Card : MonoBehaviour
         health -= amount;
         if (health <= 0) {
             health = 0;
-            onDeath?.Invoke(index);
+            onDeath?.Invoke();
         }
         RefreshUI();
     }
@@ -102,7 +102,5 @@ public class Card : MonoBehaviour
     void RefreshUI() {
         healthText.text = cardInfo.health.ToString();
     }
-
-    
 
 }
