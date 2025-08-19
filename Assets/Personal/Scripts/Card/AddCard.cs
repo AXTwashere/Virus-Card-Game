@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using NaughtyAttributes;
 
 
-// PLAYER ONLY
 
 public class AddCard : MonoBehaviour
 {
@@ -24,6 +23,14 @@ public class AddCard : MonoBehaviour
     public bool AddNewCard(Card card)
     {
         card.rect.DOMove(rect.position, 0.1f).OnComplete(() => {
+            card.rect.SetParent(rect);
+            cardAdded?.Invoke(card);
+        });
+        return true;
+    }
+    public bool AddNewCard(Card card,float time)
+    {
+        card.rect.DOMove(rect.position, time).OnComplete(() => {
             card.rect.SetParent(rect);
             cardAdded?.Invoke(card);
         });

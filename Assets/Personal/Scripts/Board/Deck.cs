@@ -10,18 +10,33 @@ public class Deck : MonoBehaviour
     public CardSpawner cardSpawner;
     public Hand hand;
     public RectTransform rect;
+    public bool IsEnemyDeck;
+
     public void GameStart()
     {
         
     }
     [Button]
     public void DrawCard() {
+        if (IsEnemyDeck) return;
         Card card = cardSpawner.CreateCardPlayer(rect.position);
         Flip(card, () => {hand.AddCard(card);});
     }
+    public void DrawCard(RectTransform rect)
+    {
+        if (IsEnemyDeck) return;
+        Card card = cardSpawner.CreateCardPlayer(rect.position);
+        Flip(card, () => { hand.AddCard(card); });
+    }
 
     public void RemoveCard(Card card) {
-        Flip(card, () => { Destroy(card); });
+        if (IsEnemyDeck) {
+            Flip(card, () => { Destroy(card); });
+            return;
+        }
+        card.rect.DOMove(rect.position, 0.1f).OnComplete(() => {
+            Flip(card, () => { Destroy(card); });
+        });
     }
 
 

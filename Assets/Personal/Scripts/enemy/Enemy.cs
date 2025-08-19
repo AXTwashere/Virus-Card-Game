@@ -1,18 +1,16 @@
 using UnityEngine;
+using NaughtyAttributes;
 
 public class Enemy : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    CardSlot cardSlot;
+    public bool inBoss = false;
+    public bool attackable => cardSlot.card != null || inBoss;
+    public int index => cardSlot.index;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    void Start() { cardSlot = GetComponent<CardSlot>(); }
 
-    public void TakeDamage(int dmg) { }
+    public void TakeDamage(int dmg) { cardSlot.card.TakeDamage(dmg); }
+    [Button]
+    public void test() { TakeDamage(1); }
 }

@@ -5,16 +5,19 @@ using DG.Tweening;
 public class CardSlot : MonoBehaviour
 {
     public int index;
-    Board board;
     AddCard addCard;
     public Deck deck;
     public Card card = null;
-
+    public RectTransform rect;
     void Start() { 
-        board = transform.parent.GetComponent<Board>();
+        rect = GetComponent<RectTransform>();
+
         addCard = GetComponent<AddCard>();
-        addCard.cardAdded.AddListener(cardAdded);
-        addCard.cardRemove.AddListener(cardRemove);
+        if (addCard != null)
+        {
+            addCard.cardAdded.AddListener(cardAdded);
+            addCard.cardRemove.AddListener(cardRemove);
+        }
     }
 
 
@@ -29,11 +32,9 @@ public class CardSlot : MonoBehaviour
     }
     public void cardRemove(Card card) { this.card = null; }
 
-    void cardDie() {    
-        card.rect.DOMove(deck.rect.position, 0.1f).OnComplete(() => {
-            deck.RemoveCard(card);
-        });
-        cardRemove(card);
+    void cardDie() {
+        deck.RemoveCard(card);
+        cardRemove(null);
     }
 
 

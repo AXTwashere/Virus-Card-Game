@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8432620146232021879}
   - component: {fileID: 8740150559111802362}
   - component: {fileID: 8830673517660720541}
+  - component: {fileID: 1579809961314781891}
   m_Layer: 5
   m_Name: card slot
   m_TagString: Untagged
@@ -111,3 +112,16 @@ MonoBehaviour:
   index: 0
   deck: {fileID: 0}
   card: {fileID: 0}
+  rect: {fileID: 0}
+--- !u!114 &1579809961314781891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1529620423299403306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6045a43bde475f14cab40faa2d48821f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

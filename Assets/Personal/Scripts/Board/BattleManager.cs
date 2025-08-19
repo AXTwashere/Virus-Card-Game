@@ -136,10 +136,10 @@ public class BattleManager : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
             return;
         }
         //check slots
-        AddCard target = dropTarget.GetComponent<AddCard>();
+        Player player = dropTarget.GetComponent<Player>();
         
-        if (curCard.removeable && target != null) {
-
+        if (curCard.removeable && player != null) {
+            AddCard target = dropTarget.GetComponent<AddCard>();
             CardSlot slotTarget = dropTarget.GetComponent<CardSlot>();
             if (slotTarget != null && curCard.cardInfo.cardType == "object" && research.points>=curCard.cardInfo.cost && slotTarget.CanAddCard()) {
                 research.removePoints(curCard.cardInfo.cost);
@@ -154,20 +154,29 @@ public class BattleManager : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         }
         //check opponent
         Enemy enemy = dropTarget.GetComponent<Enemy>();
-        if (enemy != null && originalParent.GetComponent<CardSlot>() != null)
+        CardSlot curCardSlot = originalParent.GetComponent<CardSlot>();
+        if (enemy != null &&  curCardSlot != null && !curCard.attacked)
         {
-            curCard.rect.DOMove(enemy.transform.position, .3f).SetEase(Ease.InBack).OnComplete(() =>
+            //change later for more attack
+            if (curCardSlot.index == enemy.index)
             {
-                enemy.TakeDamage(curCard.cardInfo.damage);
-                GoToParent();
+                attackAnimation(curCard, enemy, originalParent);
+                curCard.attacked = true;
                 Reset();
                 return;
-            });
+            }
         }
 
         //if none go back to original parent
         GoToParent();
         Reset();
+    }
+    void attackAnimation(Card card, Enemy enemy, AddCard parent) {
+        card.rect.DOMove(enemy.transform.position, .2f).SetEase(Ease.InBack).OnComplete(() =>
+        {
+             enemy.TakeDamage(card.cardInfo.damage);
+             parent.AddNewCard(card);
+        });
     }
     void GoToParent() { if (originalParent!=null) originalParent.AddNewCard(curCard);}
     void Reset() {

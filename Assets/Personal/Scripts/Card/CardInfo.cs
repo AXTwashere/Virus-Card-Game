@@ -5,7 +5,7 @@ using UnityEngine;
 public class CardInfo : ScriptableObject
 {
     public string cardName;
-    public string cardType; // object, spell, research
+    public string cardType; // object, spell, research, enemy
     public string description;
     [ShowAssetPreview] public Sprite artwork;
     public int cost;

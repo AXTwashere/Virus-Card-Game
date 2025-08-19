@@ -5,7 +5,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 
-[RequireComponent(typeof(Button))]
 public class Card : MonoBehaviour
 {
     public bool setupAtStart;
@@ -29,7 +28,6 @@ public class Card : MonoBehaviour
     public RectTransform rect;
     public CanvasGroup canvasGroup;
     public GameObject cardFront;
-    Button button;
 
     public UnityEvent onDeath;
     public int index;
@@ -39,14 +37,12 @@ public class Card : MonoBehaviour
     Hoverable hoverable;
 
 
-    public bool moveable;
-    public bool removeable;
+    public bool moveable = false;
+    public bool removeable = false;
     public bool attacked = false;
     
 
     void Start() {
-        button = GetComponent<Button>();
-        button.onClick.AddListener(onButtonClick);
         if (setupAtStart) SetUp(cardInfo, false);
     }
 
@@ -72,9 +68,10 @@ public class Card : MonoBehaviour
         hoverable = GetComponent<Hoverable>();
         battleManager = BattleManager.battleManager;
 
-        moveable = true;
-
-        removeable = true;
+        if (cardInfo.cardType != "enemy"){
+            moveable = true;
+            removeable = true;
+        }
 
         health = cardInfo.health;
 
@@ -88,9 +85,17 @@ public class Card : MonoBehaviour
 
         nameText.text = cardInfo.cardName;
         descriptionText.text = cardInfo.description;
-        costText.text = cardInfo.cost.ToString();
-        damageText.text = cardInfo.damage.ToString();
-        healthText.text = cardInfo.health.ToString();
+        if (cardInfo.cardType == "object" || cardInfo.cardType == "enemy")
+        {
+            costText.text = cardInfo.cost.ToString();
+            damageText.text = cardInfo.damage.ToString();
+            healthText.text = cardInfo.health.ToString();
+        }
+        else if (cardInfo.cardType == "research" || cardInfo.cardType == "spell") {
+            costText.enabled = false;
+            damageText.enabled = false;
+            healthText.enabled = false;
+        }
 
         if (cardInfo.artwork != null)
         {

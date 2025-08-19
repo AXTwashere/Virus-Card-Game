@@ -34,12 +34,9 @@ public class CardSpawner : MonoBehaviour
     public Card CreateCardEnemy()
     {
         int index = Random.Range(0, enemyCardInfos.Length);
-        Card card = Instantiate(basicCardPrefab);
+        Card card = Instantiate(basicCardPrefab, board);
         card.SetUp(enemyCardInfos[index], true);
-
-        //slide card into view
-        //flip animation
-        //on complete return card
+        card.canvasGroup.alpha = 0f;
         return card;
     }
 
