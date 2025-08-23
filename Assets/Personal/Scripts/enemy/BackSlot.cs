@@ -32,7 +32,7 @@ public class BackSlot : MonoBehaviour
         }
     }
     void moveToFrontSlot(Card card) {
-        card.rect.DOMove(nextSlot.rect.position, .2f).OnComplete(() =>
+        card.rect.DOMove(nextSlot.rect.position, .2f).SetEase(Ease.InOutQuad).OnComplete(() =>
         {
             card.rect.SetParent(nextSlot.transform);
         });
@@ -45,7 +45,7 @@ public class BackSlot : MonoBehaviour
             slot.cardAdded(card);
             cards.Remove(card);
             card.canvasGroup.alpha = 1f;
-            card.rect.DOMove(rect.position, .2f).OnComplete(() => {
+            card.rect.DOMove(rect.position, .2f).SetEase(Ease.InOutQuad).OnComplete(() => {
                 deck.Flip(card, () => {
                     card.rect.SetParent(rect);
                 });

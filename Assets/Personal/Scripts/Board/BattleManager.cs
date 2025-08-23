@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.Events;
 using System.Collections.Generic;
 using DG.Tweening;
 
@@ -10,6 +11,7 @@ public class BattleManager : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     public Hand hand;
     public Research research;
     public Board board;
+    public WaveStorer waveStorer;
     public bool playerTurn;
     bool ableToInteract;
 
@@ -25,66 +27,35 @@ public class BattleManager : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         board.TurnStart();
         research.TurnStart();
     }
+    void EnemyTurnEnd() {
+        TurnStart();
+    }
 
     //select stuff
     public Card curSelectCard; //change later
     EventSystem es = EventSystem.current;
     bool mouseUp = true;
+    public RectTransform ZoomUI;
     void Update() {
         if (Input.GetMouseButtonDown(0)) {
-            if (inZoom) endZoom();
-        }
-        if (Input.GetMouseButtonUp(0)) {
-            if (ableToInteract)
+            if (curSelectCard != null) { }
+            PointerEventData data = new PointerEventData(es) { position = Input.mousePosition };
+            RectTransform ok = null;
+            if (data != null) ok = GetUIUnderMouse(data);
+            if (ok != null)
             {
-                PointerEventData data = new PointerEventData(es) { position = Input.mousePosition };
-                RectTransform ok = null;
-                if (data != null) ok = GetUIUnderMouse(data);
-                if (ok != null) curSelectCard = ok.GetComponentInParent<Card>();
-                if (curSelectCard != null) {/*effect + zoom*/}
-                else { }
+                Zoom zoom = ok.GetComponentInParent<Zoom>();
+                if (zoom == null)
+                {
+                    curSelectCard = ok.GetComponentInParent<Card>();
+                }
             }
-
-            
+            if (curSelectCard != null) { 
+                ZoomUI.position = curSelectCard.rect.position;
+                ZoomUI.gameObject.SetActive(true); 
+            }
+            else { ZoomUI.gameObject.SetActive(false); }
         }
-    }
-    //zoom
-    bool inZoom = false;
-    AddCard zoomParent;
-    Vector3 zoomOriginalScale;
-    RectTransform canvasRect;
-    public void zoom()
-    {
-        if (curSelectCard != null && ableToInteract)
-        {
-            inZoom = true;
-            ableToInteract = false;
-
-            zoomParent = curSelectCard.GetComponentInParent<AddCard>();
-
-            Vector3 scale = curSelectCard.transform.localScale;
-            zoomOriginalScale = scale;
-
-            curSelectCard.transform.SetParent(canvas.transform);
-            curSelectCard.moveable = false;
-            curSelectCard.removeable = false;
-            //grow animation
-            curSelectCard.transform.localScale = new Vector3(scale.x * 2, scale.y * 2, 1);
-            curSelectCard.rect.anchoredPosition = new Vector2(0, 0);
-            
-        }
-    }
-    void endZoom()
-    {
-        curSelectCard.moveable = true;
-        curSelectCard.removeable = true;
-        //shrink animation
-        curSelectCard.transform.localScale = zoomOriginalScale;
-        zoomParent.AddNewCard(curSelectCard);
-        curCard = null;
-        zoomParent = null;
-        inZoom = false;
-        ableToInteract = true;
     }
 
     //drag stuff
@@ -93,14 +64,17 @@ public class BattleManager : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     Canvas canvas;
 
     void Start() {
+        waveStorer.endTurn.AddListener(EnemyTurnEnd);
         TurnStart();
         canvas = transform.root.GetComponent<Canvas>();
-        canvasRect = canvas.GetComponent<RectTransform>();
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (!ableToInteract) { return; }
+        //ZOOM
+        curSelectCard = null;
+        ZoomUI.gameObject.SetActive(false);
+
         //check for UI
         RectTransform pickUpTarget = GetUIUnderMouse(eventData);
         if (pickUpTarget == null) return;

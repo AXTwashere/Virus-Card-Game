@@ -6,50 +6,60 @@ public class Zoom : MonoBehaviour
 {
     
     public BattleManager battleManager;
-    /*
+    
     Card card;
     AddCard parent;
     Vector3 originalScale;
+    bool originalMovable;
+    bool originalRemovable;
+
     public Canvas canvas;
     RectTransform rect;
     bool inZoom = false;
+    public GameObject Tint;
+    public XButton xButton;
 
-    void Start() { rect = canvas.GetComponent<RectTransform>(); }
-    
-    void Update()
-    {
-        if (Input.GetMouseButtonDown(0) && inZoom) endZoom();
+    void Start() {
+        Tint.SetActive(false);
+        rect = canvas.GetComponent<RectTransform>();
+        xButton.Exit.AddListener(endZoom);
     }
-    */
+ 
+    
     public void zoom() {
-        battleManager.zoom();
-        /*
-        if (battleManager.curSelectCard != null) {
+        card = battleManager.curSelectCard;
+        battleManager.curSelectCard = null;
+        if (card != null) {
             inZoom = true;
 
-            card = battleManager.curSelectCard;
-            parent = card.GetComponentInParent<AddCard>();
+            Vector3 scale = card.transform.localScale;
 
-            Vector2 scale = card.transform.localScale;
+            parent = card.GetComponentInParent<AddCard>();
             originalScale = scale;
-            
-            card.transform.SetParent(canvas.transform);
+            originalMovable = card.moveable;
+            originalRemovable = card.removeable;
+
+            Tint.SetActive(true);
+            card.transform.SetParent(Tint.transform);
+
             card.moveable = false;
             card.removeable = false;
             //grow animation
-            card.transform.localScale = new Vector3(scale.x * 2, scale.y * 2, 0);
-            card.rect.anchoredPosition = new Vector2(rect.rect.width,-rect.rect.height)/2;
+            card.transform.localScale = new Vector3(scale.x * 2, scale.y * 2, 1);
+            card.rect.anchoredPosition = new Vector2(0,0);
         }
-        */
+        
     }
-    /*
+    
     void endZoom() {
-        card.moveable = true;
-        card.removeable = true;
+        card.transform.SetParent(canvas.transform);
+        Tint.SetActive(false);
+        card.moveable = originalMovable;
+        card.removeable = originalRemovable;
         //shrink animation
         card.transform.localScale = originalScale;
         parent.AddNewCard(card);
         inZoom = false;
     }
-    */
+    
 }

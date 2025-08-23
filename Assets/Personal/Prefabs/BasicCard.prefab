@@ -72,7 +72,7 @@ MonoBehaviour:
   artworkRenderer: {fileID: 0}
   health: 0
   rect: {fileID: 3070151475668895948}
-  canvasGroup: {fileID: 0}
+  canvasGroup: {fileID: 2376186864031334530}
   cardFront: {fileID: 6130617406476925254}
   onDeath:
     m_PersistentCalls:

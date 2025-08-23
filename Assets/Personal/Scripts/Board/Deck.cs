@@ -31,11 +31,11 @@ public class Deck : MonoBehaviour
 
     public void RemoveCard(Card card) {
         if (IsEnemyDeck) {
-            Flip(card, () => { Destroy(card); });
+            Flip(card, () => {Destroy(card.gameObject); });
             return;
         }
         card.rect.DOMove(rect.position, 0.1f).OnComplete(() => {
-            Flip(card, () => { Destroy(card); });
+            Flip(card, () => { Destroy(card.gameObject); });
         });
     }
 
@@ -71,7 +71,8 @@ public class Deck : MonoBehaviour
                 {
                     if ((dotPrev > 0f && dotNow <= 0f) || (dotPrev < 0f && dotNow >= 0f) || Mathf.Approximately(dotNow, 0f))
                     {
-                        card.cardFront.SetActive(true);
+                        if (card.cardFront.active) card.cardFront.SetActive(false); 
+                        else card.cardFront.SetActive(true);
                         toggled = true;
                     }
                 }

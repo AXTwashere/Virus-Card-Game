@@ -30,7 +30,10 @@ public class CardSlot : MonoBehaviour
     public bool CanAddCard(){
         return this.card == null;
     }
-    public void cardRemove(Card card) { this.card = null; }
+    public void cardRemove(Card card) {
+        this.card.onDeath.RemoveListener(cardDie);
+        this.card = null; 
+    }
 
     void cardDie() {
         deck.RemoveCard(card);

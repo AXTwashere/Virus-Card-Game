@@ -37,6 +37,7 @@ public class CardSpawner : MonoBehaviour
         Card card = Instantiate(basicCardPrefab, board);
         card.SetUp(enemyCardInfos[index], true);
         card.canvasGroup.alpha = 0f;
+        card.canvasGroup.blocksRaycasts = false;
         return card;
     }
 
