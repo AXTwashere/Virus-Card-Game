@@ -5,9 +5,11 @@ using DG.Tweening;
 
 public class CardSpawner : MonoBehaviour
 {
+    public CardInfo research;
     public CardInfo[] playerCardInfos;
     public CardInfo[] enemyCardInfos;
     public Card basicCardPrefab;
+    public Card EnemyCardPrefab;
     public RectTransform board;
 
     public Vector2 test;
@@ -24,6 +26,13 @@ public class CardSpawner : MonoBehaviour
         card.SetUp(playerCardInfos[index], true);
         return card;
     }
+    public Card CreateCardResearch(Vector3 position)
+    {
+        Card card = Instantiate(basicCardPrefab, board);
+        card.rect.localPosition = card.transform.parent.InverseTransformPoint(position);
+        card.SetUp(research, true);
+        return card;
+    }
 
     public void RemoveCard(Card card) {
         // flip animation
@@ -37,10 +46,16 @@ public class CardSpawner : MonoBehaviour
         Card card = Instantiate(basicCardPrefab, board);
         card.SetUp(enemyCardInfos[index], true);
         card.canvasGroup.alpha = 0f;
-        card.canvasGroup.blocksRaycasts = false;
+        return card;
+    }
+    public Card CreateCardEnemy(CardInfo cardInfo)
+    {
+        Card card = Instantiate(EnemyCardPrefab, board);
+        card.SetUp(cardInfo, true);
+        card.canvasGroup.alpha = 0f;
         return card;
     }
 
-    
+
 
 }

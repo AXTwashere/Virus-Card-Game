@@ -15,13 +15,14 @@ public class AddCard : MonoBehaviour
     [Button]
     void Test() { AddNewCard(test); }
 
-    RectTransform rect;
+    public RectTransform rect;
     public UnityEvent<Card> cardAdded;
 
     void Start() { rect = GetComponent<RectTransform>(); }
 
     public bool AddNewCard(Card card)
     {
+        card.OriginalParent = this;
         card.rect.DOMove(rect.position, 0.1f).OnComplete(() => {
             card.rect.SetParent(rect);
             cardAdded?.Invoke(card);
@@ -30,11 +31,29 @@ public class AddCard : MonoBehaviour
     }
     public bool AddNewCard(Card card,float time)
     {
+        card.OriginalParent = this;
         card.rect.DOMove(rect.position, time).OnComplete(() => {
             card.rect.SetParent(rect);
             cardAdded?.Invoke(card);
         });
         return true;
+    }
+    public bool AddNewCard(Card card, float time, Ease ease)
+    {
+        card.OriginalParent = this;
+        card.rect.DOMove(rect.position, time).SetEase(ease).OnComplete(() => {
+            card.rect.SetParent(rect);
+            cardAdded?.Invoke(card);
+        });
+        return true;
+    }
+
+    public void AddNewCardNoInvoke(Card card)
+    {
+        card.OriginalParent = this;
+        card.rect.DOMove(rect.position, 0.1f).OnComplete(() => {
+            card.rect.SetParent(rect);
+        });
     }
 
     public UnityEvent<Card> cardRemove;

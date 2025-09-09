@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a22741e21e459644484b996bdc9c5f17, type: 3}
+  m_Name: Bacteria 2
+  m_EditorClassIdentifier: 
+  isEnemy: 1
+  cardName: Bacteria 2
+  cardName2: bacteria bacterius
+  cardType: object
+  description: bacteria info
+  artwork: {fileID: 0}
+  cost: 3
+  health: 3
+  damage: 2
+  CardAbility: {fileID: 0}

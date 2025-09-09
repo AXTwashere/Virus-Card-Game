@@ -5,52 +5,60 @@ using NaughtyAttributes;
 
 public class BackSlot : MonoBehaviour
 {
-    CardSlot slot;
+    public CardSlot slot;
     RectTransform rect;
+    AddCard addCard;
 
+    int index;
     RectTransform spawnLoc;
-    CardSlot nextSlot;
+    FrontSlots frontSlot;
     Deck deck;
 
+    public bool hasCard => slot.card != null||cards.Count>0 || frontSlot.hasCard;
+
     List<Card> cards = new List<Card>();
-    void Start() {
+    void Awake() {
+        addCard = GetComponent<AddCard>();
+        addCard.cardAdded.AddListener(CardAdded);
+
+        frontSlot = GetComponentInParent<FrontSlots>();
         deck = GetComponentInParent<Deck>();
+
         rect = GetComponent<RectTransform>();
-        nextSlot = transform.parent.GetComponent<CardSlot>();
         slot = GetComponent<CardSlot>();
+
         spawnLoc = transform.GetChild(0).GetComponent<RectTransform>();
     }
     [Button]
     public void turnStart()
     {
         //move to front slot
-        if (nextSlot.card == null) {
-            moveToFrontSlot(slot.card);
-            nextSlot.cardAdded(slot.card);
-            slot.cardRemove(null);
+        if (!frontSlot.hasCard) {
+            
+            Card card = slot.card;
+            addCard.RemoveCard(card);
+            frontSlot.AddCard(card);
+            
             moveToBackSlot();
         }
     }
-    void moveToFrontSlot(Card card) {
-        card.rect.DOMove(nextSlot.rect.position, .2f).SetEase(Ease.InOutQuad).OnComplete(() =>
-        {
-            card.rect.SetParent(nextSlot.transform);
-        });
-    }
+    
 
+    
     public void moveToBackSlot() {
         if (slot.card == null && cards!=null && cards.Count>0)
         {
             Card card = cards[0];
-            slot.cardAdded(card);
             cards.Remove(card);
+            
             card.canvasGroup.alpha = 1f;
-            card.rect.DOMove(rect.position, .2f).SetEase(Ease.InOutQuad).OnComplete(() => {
-                deck.Flip(card, () => {
-                    card.rect.SetParent(rect);
-                });
-            });
+            addCard.AddNewCard(card, .2f, DG.Tweening.Ease.InOutQuad);
+            
         }
+    }
+
+    void CardAdded(Card card) {
+        deck.Flip(card, () => { });
     }
 
     public void AddCard(Card card) {

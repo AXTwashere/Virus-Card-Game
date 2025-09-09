@@ -22,22 +22,39 @@ public class CardSlot : MonoBehaviour
 
 
     public void cardAdded(Card newCard) {
+        if (newCard == null) return;
         card = newCard;
         card.onDeath.AddListener(cardDie);
         card.removeable = false;
+        card.index = index;
     }
 
     public bool CanAddCard(){
         return this.card == null;
     }
     public void cardRemove(Card card) {
+        if (this.card == null) return;
         this.card.onDeath.RemoveListener(cardDie);
         this.card = null; 
     }
 
-    void cardDie() {
+    public void cardDie(Card card) {
+        if (card == null) return;
         deck.RemoveCard(card);
         cardRemove(null);
+    }
+
+    public void CardUiCheck() {
+        if (card != null) return;
+
+        if (card.attacked)
+        {
+            //grey out
+        }
+        else {
+            // not grey out
+        }
+        
     }
 
 

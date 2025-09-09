@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class Research : MonoBehaviour
 {
-    AddCard addCard;
+    public AddCard addCard;
     int numCards = 1;
     public int points = 0;
 
@@ -38,5 +38,21 @@ public class Research : MonoBehaviour
     public void removePoints(int num) {
         points -= num;
         researchNumber.UpdateNumber(points);
+    }
+
+    public void AddCard(Card card) {
+        addCard.AddNewCard(card);
+    }
+
+    public void ResetResearch() {
+        points = 0;
+        numCards = 1;
+        researchNumber.UpdateNumber(points);
+            
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            Destroy(transform.GetChild(i).gameObject);
+        }
+
     }
 }

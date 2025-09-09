@@ -12,10 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a22741e21e459644484b996bdc9c5f17, type: 3}
   m_Name: Vaccine
   m_EditorClassIdentifier: 
+  isEnemy: 0
   cardName: adsf
+  cardName2: ' '
+  cardType: 
   description: sdfsfdasfs
   artwork: {fileID: 0}
   cost: 213123
   health: 31
   damage: 0
-  attackPower: 21312
+  CardAbility: {fileID: 0}

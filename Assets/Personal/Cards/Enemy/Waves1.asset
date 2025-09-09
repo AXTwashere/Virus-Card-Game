@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54feddd29bf1d3142816423bb802a5be, type: 3}
+  m_Name: Waves1
+  m_EditorClassIdentifier: 
+  waves:
+  - rows:
+    - cards:
+      - {fileID: 11400000, guid: cbf6b76b6f8401e45bf5207691dca6b3, type: 2}
+      - {fileID: 0}
+      - {fileID: 11400000, guid: cbf6b76b6f8401e45bf5207691dca6b3, type: 2}
+      - {fileID: 0}
+      - {fileID: 0}
+    - cards:
+      - {fileID: 0}
+      - {fileID: 11400000, guid: cbf6b76b6f8401e45bf5207691dca6b3, type: 2}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 11400000, guid: cbf6b76b6f8401e45bf5207691dca6b3, type: 2}
+  - rows:
+    - cards:
+      - {fileID: 11400000, guid: cbf6b76b6f8401e45bf5207691dca6b3, type: 2}
+      - {fileID: 11400000, guid: d3edb0d2319f5de47a4e2feebec8b8c9, type: 2}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+    - cards:
+      - {fileID: 0}
+      - {fileID: 11400000, guid: d3edb0d2319f5de47a4e2feebec8b8c9, type: 2}
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 11400000, guid: cbf6b76b6f8401e45bf5207691dca6b3, type: 2}
+    - cards:
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 11400000, guid: cbf6b76b6f8401e45bf5207691dca6b3, type: 2}
+      - {fileID: 0}
+      - {fileID: 0}
+  - rows:
+    - cards:
+      - {fileID: 0}
+      - {fileID: 11400000, guid: cbf6b76b6f8401e45bf5207691dca6b3, type: 2}
+      - {fileID: 0}
+      - {fileID: 11400000, guid: cbf6b76b6f8401e45bf5207691dca6b3, type: 2}
+      - {fileID: 0}
+    - cards:
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 11400000, guid: cbf6b76b6f8401e45bf5207691dca6b3, type: 2}
+      - {fileID: 0}
+      - {fileID: 0}
+    - cards:
+      - {fileID: 11400000, guid: cbf6b76b6f8401e45bf5207691dca6b3, type: 2}
+      - {fileID: 0}
+      - {fileID: 11400000, guid: cbf6b76b6f8401e45bf5207691dca6b3, type: 2}
+      - {fileID: 0}
+      - {fileID: 11400000, guid: cbf6b76b6f8401e45bf5207691dca6b3, type: 2}

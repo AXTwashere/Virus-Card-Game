@@ -195,6 +195,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   test: {fileID: 0}
+  rect: {fileID: 0}
   cardAdded:
     m_PersistentCalls:
       m_Calls: []
@@ -212,9 +213,9 @@ GameObject:
   - component: {fileID: 6610654514500261568}
   - component: {fileID: 778093094997599668}
   - component: {fileID: 1447429054773703066}
-  - component: {fileID: 2253480735571498771}
   - component: {fileID: 5479558824741567687}
   - component: {fileID: 2529042279238183726}
+  - component: {fileID: 6274124475898344018}
   m_Layer: 5
   m_Name: enemy slot
   m_TagString: Untagged
@@ -280,19 +281,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &2253480735571498771
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6735228493021354097}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f6256404be2143547964c3edc1d7055f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inBoss: 0
 --- !u!114 &5479558824741567687
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -322,9 +310,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   test: {fileID: 0}
+  rect: {fileID: 0}
   cardAdded:
     m_PersistentCalls:
       m_Calls: []
   cardRemove:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &6274124475898344018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6735228493021354097}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 887779da49a60a04187afcdf0bf68584, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

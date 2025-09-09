@@ -1,8 +1,9 @@
-using UnityEngine;
 using DG.Tweening;
-using UnityEngine.UI;
-using System.Collections.Generic;
 using NaughtyAttributes;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.XR;
 
 public class Hand : MonoBehaviour
 {
@@ -35,5 +36,11 @@ public class Hand : MonoBehaviour
     [Button]
     void Test() { AddCard(test); }
 
+    public void ResetHand() {
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            Destroy(transform.GetChild(i).gameObject);
+        }
+    }
 
 }

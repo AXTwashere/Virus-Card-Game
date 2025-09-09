@@ -9,6 +9,7 @@ public class Deck : MonoBehaviour
 {
     public CardSpawner cardSpawner;
     public Hand hand;
+    public Research research;
     public RectTransform rect;
     public bool IsEnemyDeck;
 
@@ -20,12 +21,15 @@ public class Deck : MonoBehaviour
     public void DrawCard() {
         if (IsEnemyDeck) return;
         Card card = cardSpawner.CreateCardPlayer(rect.position);
+        card.OriginalParent = hand.GetComponent<AddCard>();
         Flip(card, () => {hand.AddCard(card);});
     }
+
     public void DrawCard(RectTransform rect)
     {
         if (IsEnemyDeck) return;
         Card card = cardSpawner.CreateCardPlayer(rect.position);
+        card.OriginalParent = hand.GetComponent<AddCard>();
         Flip(card, () => { hand.AddCard(card); });
     }
 
@@ -39,8 +43,16 @@ public class Deck : MonoBehaviour
         });
     }
 
+    public void DrawResearch()
+    {
+        if (IsEnemyDeck) return;
+        Card card = cardSpawner.CreateCardResearch(rect.position);
+        card.OriginalParent = research.GetComponent<AddCard>();
+        card.canvasGroup.blocksRaycasts = false;
+        Flip(card, () => { research.addCard.AddNewCardNoInvoke(card);});
+    }
 
-    bool flipping = false;
+
     public Camera cam;
     float degreesPerSecond = 0.5f;
     Vector3 localAxis = Vector3.up;
@@ -48,8 +60,8 @@ public class Deck : MonoBehaviour
     public void Flip(Card card, Action OnFlipComplete)
     {
         RectTransform rect = card.rect;
-        if (flipping) return;
-        flipping = true;
+        if (card.flipping) return;
+        card.flipping = true;
 
         if (cam == null)
         {
@@ -81,7 +93,7 @@ public class Deck : MonoBehaviour
             })
             .OnComplete(() =>
             {
-                flipping = false;
+                card.flipping = false;
                 OnFlipComplete?.Invoke();
             });
     }

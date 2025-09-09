@@ -1,16 +1,27 @@
 using UnityEngine;
 using NaughtyAttributes;
+using DG.Tweening;
+using UnityEngine.Events;
 
 public class Enemy : MonoBehaviour
 {
-    CardSlot cardSlot;
-    public bool inBoss = false;
-    public bool attackable => cardSlot.card != null || inBoss;
-    public int index => cardSlot.index;
+    public Card card;
+    public int index => card.index;
+    public bool attackable = false;
 
-    void Start() { cardSlot = GetComponent<CardSlot>(); }
+    void Start() {
 
-    public void TakeDamage(int dmg) { cardSlot.card.TakeDamage(dmg); }
+      card = GetComponent<Card>();
+        
+    }
+
+    public void TakeDamage(int dmg) { 
+        card.TakeDamage(dmg);
+    }
+
     [Button]
     public void test() { TakeDamage(1); }
+
+
+
 }
